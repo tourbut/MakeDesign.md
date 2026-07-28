@@ -1,0 +1,12 @@
+{
+  "projectId": "27030ffd-ec64-4a4e-9bc3-21d544a71638",
+  "shape": "package",
+  "pkg": "nhimc-design-system",
+  "globalName": "NhimcDS",
+  "buildCmd": "node .design-sync/gen-sources.mjs",
+  "cssEntry": "tokens.css",
+  "readmeHeader": ".design-sync/conventions.md",
+  "guidelinesGlob": ["*.md"],
+  "extraFonts": ["fonts/fonts.css"],
+  "runtimeFontPrefixes": ["IBM Plex Sans KR"]
+}

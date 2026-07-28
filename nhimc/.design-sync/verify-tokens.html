@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>nhimc tokens — verification</title>
+<!-- Copied into ds-bundle/ by verify-tokens.mjs at run time (the build wipes
+     that dir, so this fixture lives here instead).
+     Deliberately links ONLY styles.css: a rendered design receives exactly
+     this transitive @import closure and nothing else. If a token or font is
+     unreachable from here, it is unreachable in every design. -->
+<link rel="stylesheet" href="./styles.css">
+<style>
+  /* Harness-only layout. Uses the DS tokens so it can't mask a broken one. */
+  .wrap { max-width: var(--container-max); margin: 0 auto; padding: var(--sp-lg); }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-base); }
+  .sw { border: 1px solid var(--color-border); border-radius: var(--radius-sm); overflow: hidden; }
+  .sw .chip { height: 56px; }
+  .sw .lab { padding: var(--sp-sm); font-size: var(--type-caption-sm-size); }
+  .sw code { font-family: var(--font-mono); font-weight: 600; }
+  section { padding: var(--sp-lg) 0; border-top: 1px solid var(--color-border); }
+  .row { display: flex; align-items: baseline; gap: var(--sp-base); margin-bottom: var(--sp-sm); }
+  .row .tag {
+    font-family: var(--font-mono); font-size: var(--type-mono-tag-size);
+    font-weight: var(--type-mono-tag-weight); color: var(--color-primary);
+    background: var(--color-primary-soft); border-radius: var(--radius-full);
+    padding: 4px 10px; white-space: nowrap;
+  }
+  .card { background: var(--color-surface); border: 1px solid var(--color-border);
+          border-radius: var(--radius-md); padding: var(--sp-lg); box-shadow: var(--shadow-sm); }
+  .metric { font-family: var(--type-metric-family); font-weight: var(--type-metric-weight);
+            font-size: var(--type-metric-size); color: var(--color-primary); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>nhimc 디자인 토큰 검증</h1>
+  <p style="color: var(--color-text-muted)">
+    이 페이지는 <code style="font-family:var(--font-mono)">styles.css</code> 하나만 링크합니다 —
+    렌더된 디자인이 받는 것과 정확히 같은 범위입니다.
+  </p>
+
+  <section>
+    <h2>색상</h2>
+    <div class="grid" id="swatches"></div>
+  </section>
+
+  <section>
+    <h2>타이포 스케일</h2>
+    <div id="type"></div>
+  </section>
+
+  <section>
+    <h2>표면 · 수치</h2>
+    <div class="grid">
+      <div class="card">
+        <div style="color:var(--color-text-muted); font-size:var(--type-caption-size)">대기 인원</div>
+        <div class="metric">1,284</div>
+      </div>
+      <div class="card">
+        <div style="color:var(--color-text-muted); font-size:var(--type-caption-size)">예약 건수</div>
+        <div class="metric">03,097</div>
+      </div>
+      <div class="card" style="box-shadow: var(--shadow-md)">
+        <div style="color:var(--color-text-muted); font-size:var(--type-caption-size)">shadow-md</div>
+        <div class="metric">0,042</div>
+      </div>
+      <div class="card" style="border-color: var(--color-accent); background: var(--color-accent-soft)">
+        <div style="color:var(--color-error); font-weight:700; font-size:var(--type-caption-size)">에러 채널</div>
+        <div class="metric" style="color:var(--color-error)">—</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const COLORS = ['primary','primary-hover','primary-soft','accent','accent-soft','secondary',
+  'bg','surface','border','text','text-muted','error','success','warning','on-primary','on-accent'];
+const TYPE = ['display-xl','display-lg','display-md','display-sm','title-md','lead','body-md',
+  'body-sm','caption','caption-sm','eyebrow','badge','button-md','button-sm','nav-link','metric','mono-tag'];
+
+document.getElementById('swatches').innerHTML = COLORS.map(function (c) {
+  // Value label is re-read on theme switch by refreshLabels() below.
+  return '<div class="sw"><div class="chip" style="background:var(--color-' + c + ')"></div>' +
+         '<div class="lab"><code>--color-' + c + '</code><br><span data-val="' + c + '"></span></div></div>';
+}).join('');
+
+const cs = getComputedStyle(document.documentElement);
+document.getElementById('type').innerHTML = TYPE.map(function (t) {
+  const fam = cs.getPropertyValue('--type-' + t + '-family').trim();
+  const style = 'font-size:var(--type-' + t + '-size);' +
+    'font-weight:var(--type-' + t + '-weight);' +
+    'line-height:var(--type-' + t + '-line);' +
+    'letter-spacing:var(--type-' + t + '-tracking);' +
+    (fam ? 'font-family:var(--type-' + t + '-family);' : '') +
+    (t === 'eyebrow' ? 'text-transform:var(--type-eyebrow-transform);' : '');
+  return '<div class="row"><span class="tag">' + t + '</span>' +
+         '<span style="' + style + '">국민건강보험 일산병원 Design 0123</span></div>';
+}).join('');
+
+// Labels must follow the active theme, else a dark screenshot shows light hexes.
+window.refreshLabels = function () {
+  const live = getComputedStyle(document.documentElement);
+  document.querySelectorAll('[data-val]').forEach(function (el) {
+    const v = live.getPropertyValue('--color-' + el.dataset.val).trim();
+    el.textContent = v || 'MISSING';
+  });
+};
+window.refreshLabels();
+</script>
+</body>
+</html>

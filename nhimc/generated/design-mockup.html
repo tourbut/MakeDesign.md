@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<!--
+  design-mockup.html — DESIGN.md 시각화 목업 (자동 생성물)
+  목적: .agents/DESIGN.md의 모든 디자인 철학·규칙을 목업 데이터로 한 화면에서 표현한다.
+        사람이 이 파일을 보고 각 규칙(섹션 우측 상단의 [DESIGN.md §x] 태그)에 피드백하면,
+        그 피드백을 근거로 .agents/DESIGN.md 프롬프트를 수정한다.
+  소스: .agents/DESIGN.md / .agents/design-docs/design-system-reference-llms.txt / .agents/design-docs/ui-ux-guidelines.md
+  스타일: design-mockup.css (동일 디렉터리) — 토큰 정의(:root / [data-theme="dark"])는 그 파일에 있다.
+         이 HTML에는 구조와 목업 데이터만 두고, 스타일은 CSS 파일에서만 수정한다.
+-->
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>디자인 철학 목업 · NHIS 일산병원 AgentBuilder</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="design-mockup.css">
+</head>
+<body>
+
+<!-- ===== 좌측 로고 + 정렬된 내비게이션 (DESIGN.md §3 클린 인스티튜셔널) ===== -->
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">N</div>
+    <div>
+      <div class="brand-name">AgentBuilder</div>
+      <div class="brand-sub">국민건강보험 일산병원 · 디자인 시스템</div>
+    </div>
+  </div>
+  <nav class="topnav">
+    <a href="#beliefs" class="active">핵심 방향</a>
+    <a href="#framework">의사결정</a>
+    <a href="#brand">브랜드</a>
+    <a href="#tokens">토큰</a>
+    <a href="#states">상태</a>
+    <a href="#a11y">접근성</a>
+  </nav>
+  <button class="btn btn-ghost btn-sm" id="themeToggle" aria-label="다크모드 전환">🌙 다크모드</button>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="wrap">
+    <span class="badge badge-primary"><span class="dot" style="background:var(--color-primary)"></span> DESIGN.md 시각화 목업 · 목업 데이터</span>
+    <h1 style="margin-top:var(--sp-4)">신뢰·전문성·정돈됨을 담은<br>의료기관 디자인 언어</h1>
+    <p class="lead">이 페이지는 <code>.agents/DESIGN.md</code>에 정의된 모든 디자인 철학과 규칙을 목업 데이터로 한 화면에 표현합니다. 각 섹션 우측의 <span class="badge badge-primary">DESIGN.md §x</span> 태그를 기준으로 피드백을 남겨 주세요.</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary" onclick="showToast('주요 액션(Primary) — 메디컬 블루')">주요 액션</button>
+      <button class="btn btn-accent" onclick="showToast('강조 액션(Accent) — 일산레드, 절제 사용')">강조 액션</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('beliefs').scrollIntoView()">아래로 둘러보기</button>
+    </div>
+    <div class="feedback-note">
+      <b>피드백 방법.</b> 마음에 들지 않거나 바꾸고 싶은 규칙이 보이면, 해당 섹션의 <span class="mono">[DESIGN.md §x]</span> 태그와 함께 의견을 알려주세요. 그 피드백을 근거로 <span class="mono">.agents/DESIGN.md</span> 프롬프트를 수정합니다.
+    </div>
+  </div>
+</div>
+
+<!-- ===== §1 핵심 방향 ===== -->
+<section class="block" id="beliefs">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Core Beliefs</span>
+        <h2>1. 핵심 방향</h2>
+        <p>코드와 시스템이 지켜야 할 네 가지 신념. 모든 컴포넌트는 이 신념의 시각적 증거여야 합니다.</p>
+      </div>
+      <span class="src-tag">DESIGN.md §1</span>
+    </div>
+    <div class="grid grid-4">
+      <div class="card"><h3><span class="num">01</span> 명확성</h3><p>코드는 작성하기보다 <b>읽기 쉬워야</b> 합니다. UI도 한눈에 의도가 읽혀야 합니다.</p></div>
+      <div class="card"><h3><span class="num">02</span> 예측 가능성</h3><p>시스템은 <b>의도된 일관된 방식</b>으로만 동작합니다. 같은 컴포넌트는 어디서나 같게.</p></div>
+      <div class="card"><h3><span class="num">03</span> 단순성</h3><p>불필요한 추상화·과엔지니어링(<b>YAGNI</b>)을 피합니다.</p></div>
+      <div class="card"><h3><span class="num">04</span> 반복 가능성</h3><p>테스트·배포 등 모든 과정은 <b>재현 가능</b>해야 합니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== §2 의사결정 프레임워크 ===== -->
+<section class="block" id="framework">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Decision Framework</span>
+        <h2>2. 의사결정 프레임워크</h2>
+        <p>아키텍처 변경·새 라이브러리 도입 시 통과해야 할 세 가지 질문 (예시: "다크모드 토글 도입").</p>
+      </div>
+      <span class="src-tag">DESIGN.md §2</span>
+    </div>
+    <div class="flow">
+      <div class="step"><div class="q">① 사용자 문제 해결에 반드시 필요한가?</div><small>의료진의 야간 판독 환경 → 눈 피로 감소. <span class="badge badge-success">필요 ✓</span></small></div>
+      <div class="step"><div class="q">② 발생하는 부채를 어떻게 감당하나?</div><small>토큰 이중화만으로 해결, 컴포넌트 분기 없음. <span class="badge badge-success">낮음</span></small></div>
+      <div class="step"><div class="q">③ 기존 생태계와 충돌은 없나?</div><small><code>rules/</code>·<code>skills/</code> 영향 없음. CSS 변수 계층만 사용. <span class="badge badge-success">충돌 없음</span></small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== §3 브랜드 디자인 언어 ===== -->
+<section class="block" id="brand">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Brand Design Language</span>
+        <h2>3. 브랜드 디자인 언어</h2>
+        <p>국민건강보험 일산병원 정체성 계승. 메디컬 블루(Primary) + 일산레드(Accent), 클린 인스티튜셔널 레이아웃, 신뢰를 만드는 정보 위계.</p>
+      </div>
+      <span class="src-tag">DESIGN.md §3</span>
+    </div>
+
+    <!-- 브랜드 컬러 의미 -->
+    <div class="grid grid-2" style="margin-bottom:var(--sp-6)">
+      <div class="card" style="border-left:4px solid var(--color-primary)">
+        <span class="badge badge-primary">Primary · 메디컬 블루</span>
+        <h3 style="margin-top:var(--sp-3)">#0067B1 <span class="mono" style="color:var(--color-text-muted);font-weight:400">· dark #4DA3DE</span></h3>
+        <p>병원 로고 톤. 주요 액션·활성 상태·브랜드 포인트에 <b>적극</b> 사용합니다.</p>
+        <div style="display:flex;gap:var(--sp-2);margin-top:var(--sp-4);flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm">예약 확정</button>
+          <span class="badge badge-primary">활성 탭</span>
+        </div>
+      </div>
+      <div class="card" style="border-left:4px solid var(--color-accent)">
+        <span class="badge badge-accent">Accent · 일산레드</span>
+        <h3 style="margin-top:var(--sp-3)">#E2231A <span class="mono" style="color:var(--color-text-muted);font-weight:400">· dark #FF5247</span></h3>
+        <p>환자에게 활력·신뢰를 상징. 강조·경고·중요 신호에만 <b>절제</b>하여 사용합니다.</p>
+        <div style="display:flex;gap:var(--sp-2);margin-top:var(--sp-4);flex-wrap:wrap">
+          <button class="btn btn-accent btn-sm">긴급 호출</button>
+          <span class="badge badge-accent">중요 알림</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 클린 인스티튜셔널 레이아웃 예시: 카드 그리드 (목업 데이터) -->
+    <h3 style="margin-bottom:var(--sp-4)">일관된 카드 그리드 · 정돈된 정보 구조</h3>
+    <div class="grid grid-3">
+      <div class="card"><span class="badge badge-success"><span class="dot" style="background:var(--color-success)"></span> 정상</span><h3 style="margin-top:var(--sp-3)">내과 외래</h3><p>대기 12명 · 평균 18분</p></div>
+      <div class="card"><span class="badge badge-warning"><span class="dot" style="background:var(--color-warning)"></span> 혼잡</span><h3 style="margin-top:var(--sp-3)">정형외과</h3><p>대기 34명 · 평균 47분</p></div>
+      <div class="card"><span class="badge badge-accent"><span class="dot" style="background:var(--color-accent)"></span> 마감 임박</span><h3 style="margin-top:var(--sp-3)">건강검진</h3><p>잔여 3건 · 오늘 마감</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 디자인 토큰 (색상/타이포/간격) ===== -->
+<section class="block" id="tokens">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Design Tokens</span>
+        <h2>디자인 토큰 — 일관성의 단일 출처</h2>
+        <p>모든 화면이 동일 토큰을 참조합니다 (DESIGN.md §4 일관성 우선). 색상값은 라이트/다크 자동 전환됩니다.</p>
+      </div>
+      <span class="src-tag">design-system-reference</span>
+    </div>
+
+    <h3>색상 (Color)</h3>
+    <div class="swatches" style="margin-bottom:var(--sp-8)">
+      <div class="swatch"><div class="chip" style="background:var(--color-primary)"></div><div class="meta"><div class="name">Primary</div><div class="val">메디컬 블루</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-primary-hover)"></div><div class="meta"><div class="name">Primary Hover</div><div class="val">블루 Deep</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-primary-soft)"></div><div class="meta"><div class="name">Primary Soft</div><div class="val">연한 배경</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-accent)"></div><div class="meta"><div class="name">Accent</div><div class="val">일산레드</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-secondary)"></div><div class="meta"><div class="name">Secondary</div><div class="val">Slate-Gray</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-success)"></div><div class="meta"><div class="name">Success</div><div class="val">Green</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-warning)"></div><div class="meta"><div class="name">Warning</div><div class="val">Amber</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-error)"></div><div class="meta"><div class="name">Error</div><div class="val">일산레드</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-surface);border-bottom:1px solid var(--color-border)"></div><div class="meta"><div class="name">Surface</div><div class="val">카드 배경</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--color-text)"></div><div class="meta"><div class="name">Text</div><div class="val">Deep Navy Ink</div></div></div>
+    </div>
+
+    <div class="grid grid-2">
+      <div>
+        <h3>타이포그래피 (Pretendard)</h3>
+        <div class="card" style="background:var(--color-bg)">
+          <div class="type-row"><span class="label">display-lg</span><span style="font-size:32px;font-weight:700;letter-spacing:-.02em">신뢰의 위계</span><span class="spec">32 / 700</span></div>
+          <div class="type-row"><span class="label">display-md</span><span style="font-size:24px;font-weight:600;letter-spacing:-.01em">섹션 제목</span><span class="spec">24 / 600</span></div>
+          <div class="type-row"><span class="label">display-sm</span><span style="font-size:20px;font-weight:600">카드 제목</span><span class="spec">20 / 600</span></div>
+          <div class="type-row"><span class="label">title-md</span><span style="font-size:17px;font-weight:700;letter-spacing:-.01em">브랜드 워드마크</span><span class="spec">17 / 700</span></div>
+          <div class="type-row"><span class="label">lead</span><span style="font-size:18px">히어로 리드 문단</span><span class="spec">18 / 400</span></div>
+          <div class="type-row"><span class="label">body-md</span><span style="font-size:16px">본문 가독성 우선</span><span class="spec">16 / 400</span></div>
+          <div class="type-row"><span class="label">body-sm</span><span style="font-size:15px">카드 본문</span><span class="spec">15 / 400</span></div>
+          <div class="type-row"><span class="label">caption</span><span style="font-size:14px">보조 설명</span><span class="spec">14 / 400</span></div>
+          <div class="type-row"><span class="label">caption-sm</span><span style="font-size:12px">서브 라벨</span><span class="spec">12 / 400</span></div>
+          <div class="type-row"><span class="label">eyebrow</span><span style="font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-primary)">Design Tokens</span><span class="spec">13 / 700</span></div>
+          <div class="type-row"><span class="label">button-md</span><span style="font-size:14px;font-weight:600">진료 예약하기</span><span class="spec">14 / 600</span></div>
+          <div class="type-row"><span class="label">metric</span><span class="mono" style="font-size:14px;font-weight:700;color:var(--color-primary)">1,284</span><span class="spec">Mono 14 / 700</span></div>
+          <div class="type-row" style="border-bottom:none"><span class="label">mono-tag</span><span class="mono" style="font-size:12px;font-weight:600">--color-primary</span><span class="spec">Mono 12 / 600</span></div>
+        </div>
+      </div>
+      <div>
+        <h3>간격 (4px 기준)</h3>
+        <div class="card" style="background:var(--color-bg)">
+          <div class="spacing-row"><span class="lbl">4px</span><div class="bar" style="width:4px"></div></div>
+          <div class="spacing-row"><span class="lbl">8px</span><div class="bar" style="width:8px"></div></div>
+          <div class="spacing-row"><span class="lbl">12px</span><div class="bar" style="width:12px"></div></div>
+          <div class="spacing-row"><span class="lbl">16px</span><div class="bar" style="width:16px"></div></div>
+          <div class="spacing-row"><span class="lbl">24px</span><div class="bar" style="width:24px"></div></div>
+          <div class="spacing-row"><span class="lbl">32px</span><div class="bar" style="width:32px"></div></div>
+          <div class="spacing-row"><span class="lbl">48px</span><div class="bar" style="width:48px"></div></div>
+          <div class="spacing-row" style="margin-bottom:0"><span class="lbl">64px</span><div class="bar" style="width:64px"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== §4 상태 완전성 (4+1 상태) ===== -->
+<section class="block" id="states">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">State Completeness</span>
+        <h2>4. 상태 완전성 — 로딩 / 빈 / 에러 / 성공</h2>
+        <p>모든 화면은 네 가지 상태(+부분 로딩)를 반드시 처리합니다. 아래는 "예약 목록" 화면의 각 상태 목업입니다.</p>
+      </div>
+      <span class="src-tag">DESIGN.md §4 · ui-ux §3</span>
+    </div>
+    <div class="grid grid-4">
+      <div class="state-card">
+        <div class="state-title"><span class="dot" style="background:var(--color-primary)"></span> 로딩 (Loading)</div>
+        <div class="state-body" style="align-items:stretch">
+          <div class="skeleton" style="width:100%">
+            <div class="sk" style="width:70%"></div><div class="sk" style="width:100%"></div>
+            <div class="sk" style="width:90%"></div><div class="sk" style="width:55%"></div>
+          </div>
+          <div class="spinner" style="margin-top:var(--sp-2)"></div>
+        </div>
+      </div>
+      <div class="state-card">
+        <div class="state-title"><span class="dot" style="background:var(--color-secondary)"></span> 빈 상태 (Empty)</div>
+        <div class="state-body">
+          <div class="empty-illu">🗓️</div>
+          <div>예약 내역이 없습니다.</div>
+          <button class="btn btn-primary btn-sm">진료 예약하기</button>
+        </div>
+      </div>
+      <div class="state-card">
+        <div class="state-title"><span class="dot" style="background:var(--color-error)"></span> 에러 (Error)</div>
+        <div class="state-body">
+          <div class="err-illu">⚠️</div>
+          <div class="err-msg">불러오지 못했습니다</div>
+          <small>네트워크 연결을 확인해 주세요.</small>
+          <button class="btn btn-ghost btn-sm">다시 시도</button>
+        </div>
+      </div>
+      <div class="state-card">
+        <div class="state-title"><span class="dot" style="background:var(--color-success)"></span> 성공 (Success)</div>
+        <div class="state-body" style="align-items:stretch;justify-content:flex-start">
+          <div style="display:flex;align-items:center;gap:var(--sp-2);background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:var(--sp-3)">
+            <span class="check">✓</span>
+            <div style="text-align:left"><div style="font-weight:600;font-size:14px">내과 외래</div><small style="color:var(--color-text-muted)">6/20(목) 10:30</small></div>
+          </div>
+          <button class="btn btn-primary btn-sm" style="margin-top:var(--sp-2)" onclick="showToast('예약이 완료되었습니다 ✓')">완료 토스트 보기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== §4 접근성 & 인터랙션 ===== -->
+<section class="block" id="a11y">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Accessibility & Interaction</span>
+        <h2>4. 접근성(WCAG AA)·모바일 우선·인터랙션</h2>
+        <p>공공 의료기관 정체성 — 명도 대비·키보드 접근성을 특히 엄격히. 모바일 탭 영역 ≥44px, 전환 ≤300ms.</p>
+      </div>
+      <span class="src-tag">DESIGN.md §4 · ui-ux §4</span>
+    </div>
+    <div class="grid grid-2" style="margin-bottom:var(--sp-6)">
+      <div class="card" style="background:var(--color-bg)">
+        <h3>명도 대비 검증 (WCAG AA)</h3>
+        <div style="display:flex;flex-direction:column;gap:var(--sp-2)">
+          <div style="background:var(--color-primary);color:#fff;padding:var(--sp-3);border-radius:var(--radius-sm);display:flex;justify-content:space-between"><span>Primary 위 흰 텍스트</span><span class="badge" style="background:rgba(255,255,255,.2);color:#fff">AA ✓</span></div>
+          <div style="background:var(--color-bg);color:var(--color-text);padding:var(--sp-3);border:1px solid var(--color-border);border-radius:var(--radius-sm);display:flex;justify-content:space-between"><span>본문 텍스트 대비</span><span class="badge badge-success">AAA ✓</span></div>
+          <div style="background:var(--color-accent);color:#fff;padding:var(--sp-3);border-radius:var(--radius-sm);display:flex;justify-content:space-between"><span>Accent 위 흰 텍스트</span><span class="badge" style="background:rgba(255,255,255,.2);color:#fff">AA ✓</span></div>
+        </div>
+      </div>
+      <div class="card" style="background:var(--color-bg)">
+        <h3>키보드 포커스 & 터치 영역</h3>
+        <p>Tab 키로 이동해 보세요 — 모든 인터랙티브 요소에 3px 포커스 링이 표시됩니다.</p>
+        <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;margin-top:var(--sp-2)">
+          <button class="btn btn-primary">버튼 A</button>
+          <button class="btn btn-ghost">버튼 B</button>
+          <a class="btn btn-ghost" href="#a11y">링크 C</a>
+        </div>
+        <small style="display:block;margin-top:var(--sp-3);color:var(--color-text-muted)">모든 버튼 최소 높이 44px · 즉각적 시각 피드백 · 전환 ≤300ms</small>
+      </div>
+    </div>
+    <div class="card" style="background:var(--color-bg)">
+      <h3>반응형 — 모바일 우선 (375 / 768 / 1440)</h3>
+      <p>창 너비를 줄여 보세요. 카드 그리드가 4 → 2 → 1열로, 상단 내비게이션이 접힙니다.</p>
+      <ul class="checklist" style="margin-top:var(--sp-3)">
+        <li><span class="check">✓</span> 375px 모바일 — 1열 스택, 풀폭 버튼</li>
+        <li><span class="check">✓</span> 768px 태블릿 — 2열 그리드</li>
+        <li><span class="check">✓</span> 1440px 데스크탑 — 최대 4열, 중앙 정렬 컨테이너</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div style="display:flex;justify-content:space-between;gap:var(--sp-4);flex-wrap:wrap">
+      <div>
+        <div style="font-weight:700;color:var(--color-text)">AgentBuilder · NHIS 일산병원 디자인 시스템</div>
+        <div style="margin-top:6px">소스: <span class="mono">.agents/DESIGN.md</span> · <span class="mono">design-system-reference-llms.txt</span> · <span class="mono">ui-ux-guidelines.md</span></div>
+      </div>
+      <div style="text-align:right">
+        <div>이 파일은 목업(mock) 데이터로 구성된 검토용 산출물입니다.</div>
+        <div style="margin-top:6px">피드백 → <span class="mono">.agents/DESIGN.md</span> 프롬프트 수정 반영</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><span class="check">✓</span><span id="toastMsg">완료</span></div>
+
+<script>
+  // 다크모드 토글 (DESIGN.md §3 다크모드 토큰 시연)
+  const root = document.documentElement;
+  const tBtn = document.getElementById('themeToggle');
+  tBtn.addEventListener('click', () => {
+    const dark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', dark ? 'light' : 'dark');
+    tBtn.textContent = dark ? '🌙 다크모드' : '☀️ 라이트모드';
+  });
+
+  // 토스트 (성공 피드백 — 즉각적 시각 피드백)
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastMsg').textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
+  }
+
+  // 스크롤 시 내비게이션 활성 상태 (예측 가능성)
+  const links = [...document.querySelectorAll('.topnav a')];
+  const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>

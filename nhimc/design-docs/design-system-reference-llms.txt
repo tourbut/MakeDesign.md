@@ -1,0 +1,574 @@
+---
+version: alpha
+name: nhimc-design-analysis
+description: 국민건강보험 일산병원(NHIS Ilsan Hospital)의 공공 의료기관 디자인 시스템. 순백 캔버스 위에 메디컬 블루(#0067B1) 하나만을 브랜드 전압으로 쓰고, 일산레드(#E2231A)는 긴급·폐기·에러에만 절제해 얹는 2색 체계다. 타이포는 Pretendard를 32/24/20/16px의 4단 위계로만 운용하며, 화려한 디스플레이 단계를 두지 않는다 — 정보 인지도가 시각적 임팩트보다 우선하기 때문이다. 레이아웃은 sticky 상단 헤더 + 최대 1120px 중앙 정렬 컨테이너 + 카드 그리드(4→2→1열)로 구성된 "클린 인스티튜셔널" 골격이며, 모서리는 카드 12px / 버튼 8px / 배지 pill로 부드럽되 과하지 않다. 그림자는 sm·md 두 단계뿐이고 대부분의 표면은 평면이다. 공공기관 특성상 접근성이 장식보다 우선한다 — 모든 터치 영역 44px 이상, 포커스 링 3px, 전환 300ms 이하, WCAG AA 이상 명도 대비가 강제 조건이며 라이트/다크 두 테마를 모두 정의한다.
+
+colors:
+  primary: "#0067B1"
+  primary-hover: "#00528E"
+  primary-soft: "#E7F1F9"
+  accent: "#E2231A"
+  accent-soft: "#FCE9E7"
+  secondary: "#5B6770"
+  bg: "#FFFFFF"
+  surface: "#F4F7FA"
+  border: "#E1E8EF"
+  text: "#14253A"
+  text-muted: "#5B6770"
+  error: "#E2231A"
+  success: "#1A9E5A"
+  warning: "#F2A900"
+  on-primary: "#FFFFFF"
+  on-accent: "#FFFFFF"
+
+colors-dark:
+  primary: "#4DA3DE"
+  primary-hover: "#6FB6E6"
+  primary-soft: "#16314A"
+  accent: "#FF5247"
+  accent-soft: "#3A1C1A"
+  secondary: "#8A97A2"
+  bg: "#0C1620"
+  surface: "#14222F"
+  border: "#283747"
+  text: "#E9F0F6"
+  text-muted: "#8A97A2"
+  error: "#FF5247"
+  success: "#2FBF76"
+  warning: "#F2A900"
+  on-primary: "#FFFFFF"
+  on-accent: "#FFFFFF"
+
+typography:
+  display-xl:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: clamp(32px, 4vw, 44px)
+    fontWeight: 700
+    lineHeight: 1.25
+    letterSpacing: -0.02em
+  display-lg:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 32px
+    fontWeight: 700
+    lineHeight: 1.25
+    letterSpacing: -0.02em
+  display-md:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 24px
+    fontWeight: 600
+    lineHeight: 1.3
+    letterSpacing: -0.01em
+  display-sm:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 20px
+    fontWeight: 600
+    lineHeight: 1.4
+    letterSpacing: 0
+  title-md:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 17px
+    fontWeight: 700
+    lineHeight: 1.4
+    letterSpacing: -0.01em
+  lead:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 18px
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: 0
+  body-md:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 16px
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: 0
+  body-sm:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 15px
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: 0
+  caption:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 14px
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: 0
+  caption-sm:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 12px
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: 0
+  eyebrow:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 13px
+    fontWeight: 700
+    lineHeight: 1.4
+    letterSpacing: 0.08em
+    textTransform: uppercase
+  badge:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 12px
+    fontWeight: 600
+    lineHeight: 1.4
+    letterSpacing: 0
+  button-md:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 14px
+    fontWeight: 600
+    lineHeight: 1.25
+    letterSpacing: 0
+  button-sm:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 13px
+    fontWeight: 600
+    lineHeight: 1.25
+    letterSpacing: 0
+  nav-link:
+    fontFamily: "Pretendard, 'IBM Plex Sans KR', system-ui, sans-serif"
+    fontSize: 14px
+    fontWeight: 500
+    lineHeight: 1.25
+    letterSpacing: 0
+  metric:
+    fontFamily: "'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace"
+    fontSize: 14px
+    fontWeight: 700
+    lineHeight: 1.5
+    letterSpacing: 0
+  mono-tag:
+    fontFamily: "'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace"
+    fontSize: 12px
+    fontWeight: 600
+    lineHeight: 1.4
+    letterSpacing: 0
+
+rounded:
+  none: 0px
+  xs: 4px
+  sm: 8px
+  md: 12px
+  full: 9999px
+
+spacing:
+  xs: 4px
+  sm: 8px
+  md: 12px
+  base: 16px
+  lg: 24px
+  xl: 32px
+  xxl: 48px
+  section: 64px
+
+shadow:
+  sm: "0 1px 2px rgba(20,37,58,.06), 0 1px 3px rgba(20,37,58,.04)"
+  md: "0 4px 16px rgba(20,37,58,.08)"
+  sm-dark: "0 1px 2px rgba(0,0,0,.4)"
+  md-dark: "0 4px 16px rgba(0,0,0,.5)"
+
+motion:
+  fast: 150ms
+  base: 250ms
+  max: 300ms
+  easing: ease
+  reduced-motion: "prefers-reduced-motion 시 스켈레톤·스피너 애니메이션 정지"
+
+components:
+  button-primary:
+    backgroundColor: "{colors.primary}"
+    textColor: "{colors.on-primary}"
+    typography: "{typography.button-md}"
+    rounded: "{rounded.sm}"
+    padding: 8px 16px
+    height: 44px
+  button-primary-hover:
+    backgroundColor: "{colors.primary-hover}"
+    textColor: "{colors.on-primary}"
+    rounded: "{rounded.sm}"
+  button-accent:
+    backgroundColor: "{colors.accent}"
+    textColor: "{colors.on-accent}"
+    typography: "{typography.button-md}"
+    rounded: "{rounded.sm}"
+    padding: 8px 16px
+    height: 44px
+  button-ghost:
+    backgroundColor: transparent
+    textColor: "{colors.text}"
+    borderColor: "{colors.border}"
+    typography: "{typography.button-md}"
+    rounded: "{rounded.sm}"
+    padding: 8px 16px
+    height: 44px
+  button-sm:
+    typography: "{typography.button-sm}"
+    rounded: "{rounded.sm}"
+    padding: 4px 12px
+    height: 34px
+  top-bar:
+    backgroundColor: "{colors.bg}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.border}"
+    padding: 12px 24px
+    position: sticky
+  brand-mark:
+    backgroundColor: "linear-gradient(135deg, {colors.primary}, {colors.primary-hover})"
+    textColor: "{colors.on-primary}"
+    typography: "{typography.title-md}"
+    rounded: "{rounded.md}"
+    height: 38px
+  nav-link:
+    backgroundColor: transparent
+    textColor: "{colors.text-muted}"
+    typography: "{typography.nav-link}"
+    rounded: "{rounded.sm}"
+    padding: 8px 12px
+  nav-link-active:
+    backgroundColor: "{colors.primary-soft}"
+    textColor: "{colors.primary}"
+    typography: "{typography.button-md}"
+    rounded: "{rounded.sm}"
+    padding: 8px 12px
+  hero:
+    backgroundColor: "{colors.bg}"
+    textColor: "{colors.text}"
+    typography: "{typography.display-xl}"
+    padding: 64px 0 48px
+  section-block:
+    backgroundColor: "{colors.bg}"
+    borderColor: "{colors.border}"
+    padding: 48px 0
+  section-eyebrow:
+    backgroundColor: transparent
+    textColor: "{colors.primary}"
+    typography: "{typography.eyebrow}"
+  src-tag:
+    backgroundColor: "{colors.primary-soft}"
+    textColor: "{colors.primary}"
+    typography: "{typography.mono-tag}"
+    rounded: "{rounded.full}"
+    padding: 6px 10px
+  card:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.border}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.md}"
+    padding: 24px
+    shadow: "{shadow.sm}"
+  card-metric:
+    backgroundColor: transparent
+    textColor: "{colors.primary}"
+    typography: "{typography.metric}"
+  badge-primary:
+    backgroundColor: "{colors.primary-soft}"
+    textColor: "{colors.primary}"
+    typography: "{typography.badge}"
+    rounded: "{rounded.full}"
+    padding: 4px 10px
+  badge-accent:
+    backgroundColor: "{colors.accent-soft}"
+    textColor: "{colors.accent}"
+    typography: "{typography.badge}"
+    rounded: "{rounded.full}"
+    padding: 4px 10px
+  badge-success:
+    backgroundColor: "{colors.success} 14% tint"
+    textColor: "{colors.success}"
+    typography: "{typography.badge}"
+    rounded: "{rounded.full}"
+    padding: 4px 10px
+  badge-warning:
+    backgroundColor: "{colors.warning} 18% tint"
+    textColor: "{colors.warning}"
+    typography: "{typography.badge}"
+    rounded: "{rounded.full}"
+    padding: 4px 10px
+  state-card:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.border}"
+    typography: "{typography.caption}"
+    rounded: "{rounded.md}"
+    padding: 16px
+    height: 200px
+  skeleton-bar:
+    backgroundColor: "{colors.border}"
+    rounded: "{rounded.xs}"
+    height: 12px
+  spinner:
+    borderColor: "{colors.border}"
+    accentColor: "{colors.primary}"
+    rounded: "{rounded.full}"
+    height: 32px
+  check-mark:
+    backgroundColor: "{colors.success}"
+    textColor: "{colors.on-primary}"
+    rounded: "{rounded.sm}"
+    height: 22px
+  checklist-item:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.border}"
+    typography: "{typography.body-md}"
+    rounded: "{rounded.sm}"
+    padding: 12px 16px
+  flow-step:
+    backgroundColor: "{colors.bg}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.border}"
+    accentColor: "{colors.primary}"
+    typography: "{typography.body-md}"
+    rounded: "{rounded.sm}"
+    padding: 16px
+  swatch:
+    backgroundColor: "{colors.bg}"
+    borderColor: "{colors.border}"
+    typography: "{typography.caption}"
+    rounded: "{rounded.sm}"
+  toast:
+    backgroundColor: "{colors.text}"
+    textColor: "{colors.bg}"
+    typography: "{typography.caption}"
+    rounded: "{rounded.sm}"
+    padding: 12px 16px
+    shadow: "{shadow.md}"
+  feedback-note:
+    backgroundColor: "{colors.accent-soft}"
+    textColor: "{colors.text}"
+    borderColor: "{colors.accent}"
+    typography: "{typography.body-sm}"
+    rounded: "{rounded.md}"
+    padding: 16px 24px
+  footer:
+    backgroundColor: "{colors.bg}"
+    textColor: "{colors.text-muted}"
+    borderColor: "{colors.border}"
+    typography: "{typography.caption}"
+    padding: 32px 0
+---
+
+## Overview
+
+국민건강보험 일산병원 디자인 시스템은 **공공 의료기관의 신뢰·전문성·정돈됨**을 시각화한다. 기본 캔버스는 순백(`{colors.bg}` — #FFFFFF), 잉크는 딥 네이비(`{colors.text}` — #14253A)이며, 브랜드 전압은 **메디컬 블루**(`{colors.primary}` — #0067B1) 단 하나다. Primary는 주요 CTA, 활성 내비게이션 탭, 섹션 eyebrow, 수치 지표에만 쓴다.
+
+두 번째 색인 **일산레드**(`{colors.accent}` — #E2231A)는 브랜드 컬러가 아니라 **경고 채널**이다. 긴급 호출·폐기(Revoke)·에러에만 등장하며, `{colors.error}`와 같은 값을 공유한다. 이 시스템에서 빨강이 보이면 그것은 항상 "주의하라"는 뜻이다 — 장식으로 쓰지 않는다.
+
+타이포는 **Pretendard**(대체 IBM Plex Sans KR)를 쓰고, 기술 표기·수치에만 **IBM Plex Mono**를 섞는다. 위계는 32 / 24 / 20 / 16px의 4단으로 끝난다. 컨슈머 브랜드처럼 48px 이상의 디스플레이 단계를 두지 않는데, 이는 병원 화면의 정보 밀도가 높고 **정보 인지도가 시각적 임팩트보다 우선**하기 때문이다.
+
+형태는 부드럽되 과하지 않다. 카드 12px(`{rounded.md}`), 버튼·입력 8px(`{rounded.sm}`), 배지·태그는 pill(`{rounded.full}`)이다. 그림자는 두 단계(`{shadow.sm}`, `{shadow.md}`)뿐이고 대부분의 표면은 평면이다 — 깊이는 그림자가 아니라 **면(surface) 대비와 1px 경계선**으로 만든다.
+
+**핵심 특징:**
+- 단일 브랜드 전압: `{colors.primary}`. 화면의 90%는 흰 배경 + 잉크 텍스트이고, 블루는 CTA·활성 탭·수치에만 등장한다.
+- 경고 전용 2차 색: `{colors.accent}` = `{colors.error}`. 같은 값을 의도적으로 공유해 "빨강 = 위험"의 학습 비용을 없앤다.
+- 4단 타이포 위계 + 모노스페이스 수치. 카드 내부 지표 숫자는 `{typography.metric}`(IBM Plex Mono 700)으로 표기해 자릿수 정렬을 보장한다.
+- 라이트/다크 **양쪽 필수**. 다크는 딥 네이비-블랙(`{colors-dark.bg}` — #0C1620) 기반이며 Primary가 #4DA3DE로 밝아진다. 두 테마 모두 검토·검증 대상이다.
+- 접근성이 장식보다 우선: 터치 영역 ≥44px, 포커스 링 3px, 전환 ≤300ms, WCAG AA 이상 명도 대비.
+- 4px 기반 간격 시스템, 섹션 밴드는 `{spacing.xxl}`(48px), 히어로만 `{spacing.section}`(64px).
+
+## Colors
+
+### Brand
+- **메디컬 블루** (`{colors.primary}` — #0067B1): 유일한 브랜드 컬러. Primary CTA 배경, 활성 내비 탭 텍스트, 섹션 eyebrow, 카드 수치, 포커스 링, 스피너 진행 호(arc)에 쓴다.
+- **블루 Deep** (`{colors.primary-hover}` — #00528E): Primary 호버 상태. 브랜드 마크 그라데이션의 종점이기도 하다.
+- **블루 Soft** (`{colors.primary-soft}` — #E7F1F9): Primary의 저채도 배경 톤. 활성 탭 배경, `{component.badge-primary}`, `{component.src-tag}`, 히어로 방사형 그라데이션에 쓴다.
+
+### Accent / 경고 채널
+- **일산레드** (`{colors.accent}` — #E2231A): 긴급 호출, 폐기(Revoke), 경고 배지 **전용**. 절제해서 쓴다 — 한 화면에 1~2회를 넘기지 않는다.
+- **레드 Soft** (`{colors.accent-soft}` — #FCE9E7): Accent 배지·강조 블록의 배경 톤.
+- **Error** (`{colors.error}` — #E2231A): `{colors.accent}`와 동일 값. 에러 메시지 텍스트와 에러 상태 표식에 쓴다.
+
+### Surface
+- **Canvas** (`{colors.bg}` — #FFFFFF): 페이지 기본 바닥. 카드 안에 다시 카드를 놓을 때의 내부 면으로도 쓴다.
+- **Surface** (`{colors.surface}` — #F4F7FA): 카드·패널·체크리스트 항목 배경. 흰 캔버스 위에서 1단계 들어간 면.
+
+### Border
+- **Border** (`{colors.border}` — #E1E8EF): 유일한 1px 경계선 톤. 카드 테두리, 섹션 구분선, 헤더 하단선, 스켈레톤 바 기본색까지 모두 이 값이다.
+
+### Text
+- **Ink** (`{colors.text}` — #14253A): 제목·본문의 기본 텍스트. 순수 검정(#000000)을 쓰지 않는다 — 네이비 잉크가 의료 정보의 차분한 인상을 만든다.
+- **Muted** (`{colors.text-muted}` — #5B6770): 보조 설명, 비활성 내비 라벨, 캡션, 푸터 텍스트. `{colors.secondary}`와 같은 값이다.
+- **Secondary** (`{colors.secondary}` — #5B6770): 비활성 요소·중립 상태 표식(빈 상태 dot 등).
+
+### Semantic
+- **Success** (`{colors.success}` — #1A9E5A): 성공 상태, 체크 표식(`{component.check-mark}`), 성공 배지.
+- **Warning** (`{colors.warning}` — #F2A900): 경고 상태. 라이트/다크 동일 값이며, 라이트 모드 배지 텍스트만 #9A6B00로 어둡게 내려 AA 대비를 확보한다.
+
+### Dark Mode
+다크 모드는 `[data-theme="dark"]` 속성으로 전환한다. 배경은 딥 네이비-블랙(`{colors-dark.bg}` — #0C1620), 면은 #14222F이며, Primary는 #4DA3DE로 밝아지고 Accent/Error는 #FF5247로 함께 올라간다. Success는 #2FBF76로 밝히고 Warning만 라이트와 같은 #F2A900을 유지한다. 그림자는 네이비 틴트 대신 순수 검정 기반(`{shadow.sm-dark}`, `{shadow.md-dark}`)으로 교체한다.
+
+## Typography
+
+### Font Family
+전 영역에 **Pretendard**를 쓴다. 폴백은 `'IBM Plex Sans KR', system-ui, sans-serif`. 한글 가독성이 검증된 조합이며, 별도의 디스플레이 서체를 두지 않는다.
+
+수치·토큰명·기술 표기에만 **IBM Plex Mono**(폴백 `ui-monospace, 'SFMono-Regular', monospace`)를 쓴다.
+
+로드: `https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css`
+
+### Hierarchy
+
+| Token | Size | Weight | Line Height | Letter Spacing | Use |
+|---|---|---|---|---|---|
+| `{typography.display-xl}` | clamp(32→44px) | 700 | 1.25 | -0.02em | 히어로 h1 (최대 폭 18ch) |
+| `{typography.display-lg}` | 32px | 700 | 1.25 | -0.02em | 페이지 h1 |
+| `{typography.display-md}` | 24px | 600 | 1.3 | -0.01em | 섹션 제목 h2 |
+| `{typography.display-sm}` | 20px | 600 | 1.4 | 0 | 카드·서브섹션 제목 h3 |
+| `{typography.title-md}` | 17px | 700 | 1.4 | -0.01em | 브랜드 워드마크, 브랜드 마크 이니셜 |
+| `{typography.lead}` | 18px | 400 | 1.5 | 0 | 히어로 리드 문단 (최대 폭 60ch) |
+| `{typography.body-md}` | 16px | 400 | 1.5 | 0 | 기본 본문, 체크리스트 항목 |
+| `{typography.body-sm}` | 15px | 400 | 1.5 | 0 | 카드 본문, 안내 배너 |
+| `{typography.caption}` | 14px | 400 | 1.5 | 0 | 보조 설명, 푸터, 상태 카드 텍스트 |
+| `{typography.caption-sm}` | 12px | 400 | 1.5 | 0 | 브랜드 서브라벨, 스와치 값 표기 |
+| `{typography.eyebrow}` | 13px | 700 | 1.4 | 0.08em (uppercase) | 섹션 상단 라벨 ("Design Tokens") |
+| `{typography.badge}` | 12px | 600 | 1.4 | 0 | 상태 배지 라벨 |
+| `{typography.button-md}` | 14px | 600 | 1.25 | 0 | 버튼 라벨, 활성 내비 탭 |
+| `{typography.button-sm}` | 13px | 600 | 1.25 | 0 | 소형 버튼 라벨 |
+| `{typography.nav-link}` | 14px | 500 | 1.25 | 0 | 비활성 내비 탭 |
+| `{typography.metric}` | 14px | 700 | 1.5 | 0 | 카드 수치 지표 (IBM Plex Mono) |
+| `{typography.mono-tag}` | 12px | 600 | 1.4 | 0 | `[DESIGN.md §x]` 소스 태그 (IBM Plex Mono) |
+
+### Principles
+디스플레이 단계가 얕다. 최대치인 히어로 h1조차 데스크탑에서 44px에서 멈추고, 대부분의 화면은 32px h1로 시작한다. 병원 업무 화면은 한 스크롤에 담아야 할 정보가 많고, 큰 타이포는 그 밀도를 방해한다.
+
+**본문 폭을 제한한다.** 히어로 제목은 18ch, 리드 문단은 60ch, 섹션 설명은 64ch를 넘기지 않는다. 한글 본문에서 이 폭을 넘기면 행 추적이 급격히 어려워진다.
+
+**숫자는 모노스페이스로 쓴다.** 검사 수치, 예약 건수, 대기 인원처럼 비교·정렬되는 숫자는 `{typography.metric}`으로 표기해 자릿수를 정렬한다. 이것이 이 시스템에서 모노스페이스를 쓰는 유일한 정당한 이유다.
+
+### Note on Font Substitutes
+Pretendard를 로드할 수 없는 환경에서는 **IBM Plex Sans KR** → **Noto Sans KR** 순으로 대체한다. Noto Sans KR은 Pretendard보다 자간이 넓으므로 display 단계의 letter-spacing을 0으로 되돌린다.
+
+## Layout
+
+### Spacing System
+- **기본 단위:** 4px.
+- **토큰:** `{spacing.xs}` 4px · `{spacing.sm}` 8px · `{spacing.md}` 12px · `{spacing.base}` 16px · `{spacing.lg}` 24px · `{spacing.xl}` 32px · `{spacing.xxl}` 48px · `{spacing.section}` 64px.
+- **섹션 상하 패딩:** `{spacing.xxl}`(48px). 히어로만 상단 `{spacing.section}`(64px).
+- **카드 내부 패딩:** `{spacing.lg}`(24px)이 기본. 상태 카드·체크리스트처럼 밀도가 필요한 곳은 `{spacing.base}`(16px).
+- **그리드 간격:** 카드 사이 `{spacing.base}`(16px). 섹션 헤드와 콘텐츠 사이 `{spacing.xl}`(32px).
+
+### Grid & Container
+- **컨테이너 최대 폭:** 1120px, 중앙 정렬, 좌우 패딩 `{spacing.lg}`(24px) — 모바일에서 `{spacing.base}`(16px).
+- **카드 그리드:** 기본 4열. 2열(2-up), 3열(3-up) 변형을 제공하며 모두 같은 gap을 쓴다.
+- **상단 헤더:** `position: sticky`, 높이는 콘텐츠 기반(패딩 12/24px), 하단 1px `{colors.border}` + 배경 블러(`backdrop-filter: saturate(150%) blur(10px)`).
+
+### Whitespace Philosophy
+섹션 사이는 48px로 넉넉히 띄우되 카드 사이는 16px로 조인다. "섹션은 열려 있고 그 안은 촘촘하다" — 병원 업무 화면에서 한 스크롤당 정보량을 확보하면서도 섹션 경계는 분명히 읽히게 하는 절충이다.
+
+## Elevation
+
+그림자 단계는 **둘뿐**이며, 표면의 대부분은 평면이다.
+
+- **평면(그림자 없음):** 히어로, 섹션 밴드, 푸터, 체크리스트, 흐름 스텝 — 표면의 대부분.
+- **`{shadow.sm}`** — `0 1px 2px rgba(20,37,58,.06), 0 1px 3px rgba(20,37,58,.04)`: 카드와 브랜드 마크에 적용하는 기본 부양. 네이비 틴트 그림자라 순수 검정보다 부드럽게 얹힌다.
+- **`{shadow.md}`** — `0 4px 16px rgba(20,37,58,.08)`: 화면 위에 뜨는 요소(토스트) 전용.
+- **다크 모드:** `{shadow.sm-dark}` / `{shadow.md-dark}`로 교체한다. 어두운 배경에서는 네이비 틴트가 보이지 않으므로 순수 검정을 더 진하게 쓴다.
+
+깊이는 그림자가 아니라 **면 대비(`{colors.bg}` vs `{colors.surface}`) + 1px 경계선**으로 만든다. 새로운 그림자 단계를 추가하지 않는다.
+
+## Components
+
+### Buttons
+
+**`button-primary`** — Primary 채움, 흰 텍스트, 8px 반경, 8×16px 패딩, **최소 높이 44px**, 14px/600. 화면당 주요 행동 하나에만 쓴다.
+
+**`button-primary-hover`** — 호버 시 배경이 `{colors.primary-hover}`로 어두워진다. `:active`에서는 `translateY(1px)`만 적용하고 그림자는 바꾸지 않는다.
+
+**`button-accent`** — 일산레드 채움. 폐기(Revoke)·긴급 호출 등 **되돌릴 수 없는 행동**에만 쓴다. 호버는 `filter: brightness(.93)`.
+
+**`button-ghost`** — 투명 배경 + 1px `{colors.border}` 테두리 + 잉크 텍스트. 보조 행동("다시 시도", "취소"). 호버 시 `{colors.surface}` 채움.
+
+**`button-sm`** — 카드 내부의 조밀한 행동용. 높이 34px, 4×12px 패딩, 13px 라벨. **데스크탑 밀집 영역 한정** — 모바일 주요 동선에는 쓰지 않는다(44px 규칙 위반).
+
+모든 버튼은 `:focus-visible`에서 `outline: 3px solid {colors.primary}; outline-offset: 2px`를 받는다.
+
+### Navigation
+
+**`top-bar`** — 흰 표면, sticky 고정, 12×24px 패딩, 하단 1px 경계선, 배경 블러. 좌측 브랜드(마크 + 이름 + 서브라벨), 우측 내비 링크 + 테마 토글.
+
+**`brand-mark`** — 38×38px 정사각, 12px 반경, `{colors.primary}` → `{colors.primary-hover}` 135° 그라데이션, 흰 이니셜, `{shadow.sm}`.
+
+**`nav-link`** — 비활성 상태: muted 텍스트, 투명 배경, 8×12px 패딩, 8px 반경. 호버 시 `{colors.surface}` 배경 + 잉크 텍스트.
+
+**`nav-link-active`** — `{colors.primary-soft}` 배경 + `{colors.primary}` 텍스트 + weight 600. 밑줄이 아니라 **soft 배경 pill**로 활성을 표시한다.
+
+860px 이하에서 상단 내비는 숨긴다.
+
+### Content Surfaces
+
+**`card`** — `{colors.surface}` 배경, 1px `{colors.border}` 테두리, 12px 반경, 24px 패딩, `{shadow.sm}`. 흰 캔버스 위에 놓이는 기본 정보 단위. 카드 안에 다시 면이 필요하면 배경을 `{colors.bg}`로 뒤집는다.
+
+**`card-metric`** — 카드 내부 수치. `{typography.metric}`(IBM Plex Mono 700) + `{colors.primary}`. 자릿수 정렬이 필요한 모든 숫자에 쓴다.
+
+**`section-eyebrow`** — 섹션 제목 위의 대문자 소형 라벨. 13px/700, 0.08em 자간, Primary 색. 섹션의 성격을 한 단어로 예고한다.
+
+**`src-tag`** — `[DESIGN.md §x]` 소스 매핑 태그. `{colors.primary-soft}` 배경 위 Primary 모노스페이스 12px, pill 반경, 6×10px 패딩. **목업 전용 컴포넌트**로, 사람이 피드백할 조항 번호를 가리킨다. 실제 제품 화면에는 쓰지 않는다.
+
+**`flow-step`** — 의사결정 흐름의 한 단계. 흰 배경, 1px 테두리에 **좌측만 4px Primary 스트라이프**, 8px 반경, 16px 패딩, 최소 폭 200px. 좌측 스트라이프가 이 시스템에서 방향성을 표현하는 유일한 장치다.
+
+**`checklist-item`** — `{colors.surface}` 배경, 1px 테두리, 8px 반경, 12×16px 패딩. 좌측에 `{component.check-mark}`(22px, `{colors.success}` 채움, 흰 체크).
+
+**`feedback-note`** — 점선 `{colors.accent}` 테두리 + `{colors.accent-soft}` 배경, 12px 반경, 16×24px 패딩. 검토자에게 행동을 요구하는 안내 배너. 점선은 이 시스템에서 여기에만 쓴다.
+
+### Badges
+
+네 종류 모두 pill 반경(`{rounded.full}`), 12px/600, 4×10px 패딩으로 형태가 같고 **색으로만** 구분한다.
+
+- **`badge-primary`** — `{colors.primary-soft}` 배경 + Primary 텍스트. 중립 정보 태그.
+- **`badge-accent`** — `{colors.accent-soft}` 배경 + Accent 텍스트. 긴급·폐기 표식.
+- **`badge-success`** — `{colors.success}` 14% 틴트 배경 + Success 텍스트.
+- **`badge-warning`** — `{colors.warning}` 18% 틴트 배경. 라이트 모드 텍스트만 #9A6B00로 낮춰 AA를 확보하고, 다크 모드에서는 `{colors-dark.warning}`을 그대로 쓴다.
+
+### States (4종 필수)
+
+모든 화면은 **로딩 / 빈 상태 / 에러 / 성공** 네 상태를 반드시 구현한다(`ui-ux-guidelines.md §3`은 여기에 **부분 로딩**을 더해 5종을 요구한다). `{component.state-card}`(surface 배경, 12px 반경, 16px 패딩, 최소 높이 200px)가 각 상태의 컨테이너다.
+
+**로딩** — `{component.skeleton-bar}`(높이 12px, 4px 반경, `{colors.border}` 기반 shimmer 1.4s)를 실제 콘텐츠의 행 폭(70% / 100% / 90% / 55%)에 맞춰 쌓는다. 전체 화면 대기에는 `{component.spinner}`(32px, 3px 테두리, 상단만 Primary, 0.8s 회전)를 함께 쓴다.
+
+**빈 상태** — 중립 dot(`{colors.secondary}`) + 아이콘 + 한 줄 설명 + **다음 행동 버튼**. 빈 상태를 막다른 길로 두지 않는다.
+
+**에러** — `{colors.error}` dot + 굵은 에러 메시지(`{colors.error}`) + 원인 설명 한 줄 + "다시 시도" `{component.button-ghost}`. 원인과 복구 수단을 항상 함께 제시한다.
+
+**성공** — `{colors.success}` dot + 결과 요약 카드 + `{component.toast}`. 토스트는 `{colors.text}` 배경에 `{colors.bg}` 텍스트로 반전되며, 화면 우하단에서 0.25s에 올라온다. `role="status"` + `aria-live="polite"` 필수.
+
+## Responsive Behavior
+
+| Name | Width | Key Changes |
+|---|---|---|
+| Mobile | < 560px | 모든 그리드 1열 스택. 컨테이너 좌우 패딩 16px. 히어로 상하 패딩 32px로 축소. 상단 내비 숨김. |
+| Tablet | 560–860px | 3열·4열 그리드가 2열로. 상단 내비 여전히 숨김(브랜드 + 테마 토글만). |
+| Desktop | 860–1440px | 전체 내비 노출, 카드 그리드 최대 4열, 컨테이너 1120px 중앙 정렬. |
+| Wide | > 1440px | 컨테이너 1120px에서 멈추고 좌우 여백이 나머지를 흡수한다. |
+
+검증 뷰포트는 **375 / 768 / 1440px** 세 지점이며, 두 테마(라이트/다크) 모두에서 확인한다.
+
+### Touch Targets
+- 모든 주요 버튼 최소 높이 **44px**.
+- `{component.button-sm}`은 34px로 44px 규칙의 유일한 예외이며, **데스크탑 밀집 영역 한정**이다.
+- 내비 링크는 8×12px 패딩으로 실효 터치 영역 ≥36px — 모바일에서는 내비 자체가 숨겨지므로 허용된다.
+
+### Collapsing Strategy
+- 그리드는 **열 수만 줄인다** (4 → 2 → 1). 행을 재배치하지 않는다.
+- 상단 내비는 860px에서 사라진다.
+- 카드는 어떤 폭에서도 가로 스크롤을 만들지 않는다.
+
+## Accessibility
+
+- **명도 대비:** WCAG **AA** 이상이 최소 기준. 공공 의료기관 특성상 본문은 AAA를 목표로 한다. `{colors.text}`(#14253A) on `{colors.bg}`는 AAA를 만족한다.
+- **Primary/Accent 위 텍스트:** 항상 흰색(`{colors.on-primary}`).
+- **포커스 링:** `outline: 3px solid {colors.primary}; outline-offset: 2px`. 모든 인터랙티브 요소에 예외 없이 적용하며 `outline: none`을 쓰지 않는다.
+- **모션:** 전환 `{motion.fast}`(150ms, 색상·배경) ~ `{motion.base}`(250ms, 테마·토스트). `{motion.max}`(300ms) 초과 금지.
+- **`prefers-reduced-motion: reduce`:** 스켈레톤 shimmer와 스피너 회전을 정지한다.
+- **상태 알림:** `role="status"` + `aria-live="polite"`.
+
+## Known Gaps
+
+- **부분 로딩(Partial) 상태:** `ui-ux-guidelines.md §3`이 5번째 필수 상태로 요구하지만(무한 스크롤·점진적 로딩) 토큰도 목업 시연도 없다. 가장 시급한 공백이다.
+- **폼 입력 컴포넌트:** text input, select, checkbox, radio의 토큰이 아직 정의되지 않았다. 현재 목업에 해당 표면이 없다. `ui-ux-guidelines.md §4`의 "포커스 트랩" 요구도 모달 토큰이 없어 검증할 수 없다.
+- **테이블·데이터 그리드:** 병원 업무 화면의 핵심인 목록형 테이블(정렬 헤더, 행 호버, 페이지네이션)이 미정의 상태다.
+- **모달·다이얼로그:** 스크림(scrim) 색·불투명도, 다이얼로그 표면 토큰이 없다. 토스트만 정의되어 있다.
+- **차트·데이터 시각화:** 카테고리 팔레트, 축·격자선 색이 미정의. Primary 하나로는 다계열 차트를 표현할 수 없으므로 별도 팔레트가 필요하다.
+- **아이콘 세트:** 목업은 이모지를 자리표시자로 쓰고 있다. 실제 아이콘 라이브러리(굵기·그리드·크기 단계)가 확정되지 않았다.
+- **호버 상태 색상:** `{colors.primary-hover}` 외의 호버 톤은 `{colors.surface}` 채움 또는 `filter: brightness()`로 처리하고 있어 토큰화되어 있지 않다.
+- **컴포넌트 라이브러리 바인딩:** 프론트엔드 프레임워크와 컴포넌트 라이브러리가 아직 정해지지 않았다. 무엇을 채택하든 라이브러리 기본 테마 색상은 쓰지 않고 위 토큰으로 전면 오버라이드한다.
